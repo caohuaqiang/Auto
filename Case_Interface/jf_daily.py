@@ -78,7 +78,7 @@ class App(unittest.TestCase):
             cursor.execute(_sql)
             contents = cursor.fetchall()
         if contents:
-            self.assertNotEqual(rec_pro, [])
+            self.assertNotEqual([], rec_pro)
 
 
 if __name__ == '__main__':

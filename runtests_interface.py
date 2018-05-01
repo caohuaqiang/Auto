@@ -8,8 +8,8 @@ from HTMLTestRunner import HTMLTestRunner
 import unittest
 from ForUse import Report_Mail
 
-# 指定测试用例为当前目录下的interface目录
-test_dir = parent_dir + '/Interface'
+# 指定测试用例为当前目录下的Case_Interface目录
+test_dir = parent_dir + '/Case_Interface'
 discover = unittest.defaultTestLoader.discover(test_dir, pattern='jf*.py')
 
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     filename = './Report_Interface/' + now + '_result.html'
     fp = open(filename, 'wb')
     runner = HTMLTestRunner(stream=fp,
-                            title='曹华强自动化测试报告',
+                            title='曹华强自动化测试报告(接口)',
                             description='接口自动化测试报告')
     # runner = unittest.TextTestRunner()
     runner.run(discover)
