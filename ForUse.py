@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
 import smtplib
+import configparser
 
 
 class Report_Mail:
@@ -62,4 +63,10 @@ class Report_Mail:
         smtp.quit()
         print("send email success!")
 
+
+def read_ini(ini_path: str) -> 'config':
+    """读取ini配置文件，传入参数为文件路径（字符串格式），返回config对象，可对该对象使用config.get(section,name)方法取得相应的参数"""
+    config = configparser.ConfigParser()
+    config.read(ini_path, encoding='utf-8')
+    return config
 
