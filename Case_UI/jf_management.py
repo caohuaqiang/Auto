@@ -199,7 +199,7 @@ class Manage(unittest.TestCase):
                 want_data = {'name': self.config['bm'], 'status': 1, 'time_limit': self.config['timelimit']}
                 self.assertEqual(want_data, borr)
             except Exception as err:
-                raise Exception('数组越界，sql查询标的结果为空:', err)
+                raise Exception('数组越界，sql查询标的结果为空(发标失败):', err)
 
 
 if __name__ == '__main__':
