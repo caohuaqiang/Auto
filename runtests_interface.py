@@ -2,7 +2,6 @@
 import time, sys, os
 parent_dir = os.path.dirname(os.path.abspath(__file__))     # 根目录-Auto
 sys.path.append(parent_dir)
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.abspath(__file__))
 sys.path.append('./')
 from HTMLTestRunner import HTMLTestRunner
