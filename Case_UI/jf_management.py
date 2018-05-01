@@ -7,26 +7,49 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))     # A
 sys.path.insert(0, parent_dir)
 from pprint import pprint
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import random
 import time
 import unittest
 from ForUse import read_ini
+from DB import UseDataBase
 
 
 ini_path = parent_dir + '/borr.ini'
 config = eval(read_ini(ini_path).get(section='borrow', option='config'))
 
 
+def borr_timelimit():
+    """查询现有的可投状态的标的天数,随机生成标的天数,确保发标必定在前端页面上出现【可供后续投资用】"""
+    with UseDataBase() as cursor:
+        sql = "SELECT `name`, `status`, category, time_limit FROM rd_borrow WHERE `status` = 1;"
+        cursor.execute(sql)
+        contents = cursor.fetchall()
+        time_limit = set()
+        for borr in contents:
+            time_limit.add(borr['time_limit'])
+        x = random.randint(31, 360)
+        while x <= 360:
+            if x in time_limit:
+                x = random.randint(31, 360)
+            else:
+                print('最终生成的随机标的天数为:', x)
+                break
+        return x
+
+
 class Manage(unittest.TestCase):
     """后台管理系统"""
     def setUp(self):
-        self.config = config
-        pprint(config)
+        self.config = config.copy()
+        self.config['bm'] += time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())        # 配置文件的标名后追加日期如:2018.05.01
+        self.config['timelimit'] = borr_timelimit()                            # 标的天数随机数（确保生成的随机天数唯一）
+        pprint(self.config)
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(10)
         self.driver.maximize_window()
@@ -46,8 +69,7 @@ class Manage(unittest.TestCase):
         driver.find_element_by_css_selector('[value=立即登录]').click()
         time.sleep(5)
 
-
-    def test_fabiao(self):
+    def test_Fabiao(self):
         """发标"""
         driver = self.driver
         try:
@@ -168,10 +190,19 @@ class Manage(unittest.TestCase):
             print('出错时的截图： ', filename)
             driver.save_screenshot(filename)
             print(err)
+        with UseDataBase() as cursor:
+            sql = "select `name`, `status`, time_limit from rd_borrow where `status` = 1 and time_limit = %s and `name` = %s;"
+            cursor.execute(sql, args=(self.config['timelimit'], self.config['bm'],))
+            contents = cursor.fetchall()
+            try:
+                borr = contents[-1]
+                want_data = {'name': self.config['bm'], 'status': 1, 'time_limit': self.config['timelimit']}
+                self.assertEqual(want_data, borr)
+            except Exception as err:
+                raise Exception('数组越界，sql查询标的结果为空:', err)
 
 
 if __name__ == '__main__':
     unittest.main()
-
 
 
