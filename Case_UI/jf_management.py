@@ -37,7 +37,7 @@ class Manage(unittest.TestCase):
     def login(self):
         driver = self.driver
         driver.get('https://erp-t.jfcaifu.com/admin/login.html')
-        driver.find_element_by_id("userName1").clear()
+        driver.find_element_by_id("userName").clear()
         driver.find_element_by_id("userName").send_keys("admin")
         driver.find_element_by_id("password").clear()
         driver.find_element_by_id("password").send_keys("123456")
@@ -165,10 +165,7 @@ class Manage(unittest.TestCase):
         except Exception as err:
             picture_path = parent_dir + '/Picture'
             filename = picture_path + '/%s.jpg' % time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())
-            print(filename)
-
-
-            # filename = '../Picture/%s.jpg' % time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())
+            print('出错时的截图： ', filename)
             driver.save_screenshot(filename)
             print(err)
 
