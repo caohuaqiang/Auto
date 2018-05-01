@@ -3,7 +3,7 @@
 import sys, os
 sys.path.append(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))     # auto文件夹路径
+parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))     # Auto文件夹路径
 sys.path.insert(0, parent_dir)
 from pprint import pprint
 from selenium import webdriver
@@ -163,7 +163,12 @@ class Manage(unittest.TestCase):
             driver.find_element_by_link_text(u"确定").click()  # 关闭弹窗：操作成功！
             time.sleep(2)
         except Exception as err:
-            filename = '../Picture/%s.jpg' % time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())
+            picture_path = parent_dir + '/Picture'
+            filename = picture_path + '/%s.jpg' % time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())
+            print(filename)
+
+
+            # filename = '../Picture/%s.jpg' % time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())
             driver.save_screenshot(filename)
             print(err)
 
