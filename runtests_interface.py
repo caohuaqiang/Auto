@@ -6,7 +6,7 @@ sys.path.append(os.path.abspath(__file__))
 sys.path.append('./')
 from HTMLTestRunner import HTMLTestRunner
 import unittest
-from ForUse import Report_Mail
+from ForUse import Report_Mail, read_ini
 
 # 指定测试用例为当前目录下的Case_Interface目录
 test_dir = parent_dir + '/Case_Interface'
@@ -25,7 +25,8 @@ if __name__ == '__main__':
     fp.close()
 
     report_dict = parent_dir + '/Report_Interface/'
+    Email = eval(read_ini(parent_dir + '/user.ini').get(section='Email', option='email'))
     rm = Report_Mail(report_dict)
-    rm.send_mail()
+    rm.send_mail(receiver=[Email['chq'], ])
 
 

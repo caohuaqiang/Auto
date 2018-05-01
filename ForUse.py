@@ -25,7 +25,7 @@ class Report_Mail:
                             'file_name': file_name}
         return file_for_deliver
 
-    def send_mail(self):
+    def send_mail(self, receiver):
         """发邮件（附件+正文）"""
         file = self.search_latest_file()
         file_new = file['file_new']
@@ -56,7 +56,6 @@ class Report_Mail:
         send_user = '342473195@qq.com'
         password = 'nklgzyvjnnxzbggb'
         # 收件人邮箱
-        receiver = '342473195@qq.com'
         smtp.connect(host=smtpsever, port=port)
         smtp.login(send_user, password)
         smtp.sendmail(send_user, receiver, msgRoot.as_string())
