@@ -10,6 +10,7 @@ from DB import UseDataBase
 
 
 class CMS(unittest.TestCase):
+    """CMS新项目接口（肖傲）"""
     def setUp(self):
         self.session = requests.session()
         self.ym = 'http://139.196.107.14:9000'
