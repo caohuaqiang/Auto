@@ -5,8 +5,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
+from pprint import pprint
+import requests
 import smtplib
 import configparser
+
 
 
 class Report_Mail:
@@ -63,9 +66,38 @@ class Report_Mail:
         print("send email success!")
 
 
+# class Houtai:
+#     def __init__(self):
+#         self.session = requests.session()
+#         self.login_data = {'userName': 'admin', 'password': '123456', 'valicode': 'jfcf',}
+#         self.ym = 'https://erp-t.jfcaifu.com'
+#
+#     def login(self):
+#         url_login = self.ym + '/modules/login.html'
+#         res_login = self.session.request(method='post', url=url_login, params=self.login_data)
+#         return res_login
+#
+#     def search_money(self):
+#         self.login()
+#         url_search_money = self.ym + '/modules/account/account/accountList.html'
+#         data_search_money = {'searchName': '15821903152',
+#                              'page': 1,
+#                              'rows': 20,
+#                              'sort': 'id',
+#                              'order': 'desc',}
+#         res_search_money = self.session.request(method='post', url=url_search_money, params=data_search_money)
+#         pprint(res_search_money.json())
+#
+#     def search_huifu_money(self):
+#         self.login()
+#         url_huifu_money = self.ym + '/modules/account/account/tppQueryUserBalance.html'
+#         res_huifu_money = self.session.request(method='post', url=url_huifu_money, params={'id': 1687})
+#         # print(res_huifu_money.text)
+#         return res_huifu_money.text
+
+
 def read_ini(ini_path: str) -> 'config':
     """读取ini配置文件，传入参数为文件路径（字符串格式），返回config对象，可对该对象使用config.get(section,name)方法取得相应的参数"""
     config = configparser.ConfigParser()
     config.read(ini_path, encoding='utf-8')
     return config
-
