@@ -18,7 +18,7 @@ class CMS(unittest.TestCase):
     def test_picture_query(self):
         """图片查询"""
         url = self.ym + '/cms/images/queryEnableImages'
-        data = {'source': '40404', }
+        data = {'source': 'baidu', }
         imageTypes = {'index_loop_banner_mb': '移动首页轮播图',
                       'index_float_icon_mb': '移动首页悬浮ICON图',
                       'index_up_banner_mb': '首页固定图（上）',
@@ -35,19 +35,50 @@ class CMS(unittest.TestCase):
             print('传参： ', data)
             res = self.session.request(method='post', url=url, params=data)
             self.assertEqual(200, res.status_code, msg='响应状态码非200！')
-            pprint(res.json())
+            # pprint(res.json())
+            dt = res.json()['data']     # 图片数据字典
+
+            if dt:      #检查是否是空字典
+                try:
+                    with UseDataBase() as cursor:
+                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and image_type = %s;"
+                        cursor.execute(sql, args=(k, ))
+                        contents = cursor.fetchall()
+                        if contents:
+                            self.assertNotEqual([], dt[k], msg='数据库有数据，但是给的列表为空！')
+
+                except Exception as err:
+                    raise Exception(err)
             print('===============================================以上是【' + v + '】的内容=========================================================')
+
         print()
         print()
-        print('*************************不传source（渠道号）**********************')
+        print('************************************不传source（渠道号）******************************************')
         for k, v in imageTypes.items():
             data_kong = {}
             data_kong['imageTypes'] = k
             print('传参： ', data_kong)
             res_kong = self.session.request(method='post', url=url, params=data_kong)
             self.assertEqual(200, res_kong.status_code, msg='响应状态码非200！')
-            pprint(res_kong.json())
+            # pprint(res_kong.json())
+            dt_kong = res_kong.json()['data']  # 图片数据字典
+            if dt_kong:
+                try:
+                    with UseDataBase() as cursor:
+                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and image_type = %s and source is NULL ;"
+                        cursor.execute(sql, args=(k, ))
+                        contents = cursor.fetchall()
+                        if contents:
+                            self.assertNotEqual([], dt_kong[k], msg='数据库有数据，但是给的列表为空！')
+
+                except Exception as err:
+                    raise Exception(err)
             print('===============================================以上是【' + v + '】的内容=========================================================')
+
+    # def test_article_query(self):
+    #     """文章查询"""
+    #     url = self.ym + '/cms/article/query/enableArticles'
+    #     data
 
 
 if __name__ == '__main__':
