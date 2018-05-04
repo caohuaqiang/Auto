@@ -43,10 +43,10 @@ class App(unittest.TestCase):
                      'ts': ts}
         self.signature = signature.copy()
         self.session = requests.session()
-        self.login()
-        self.user_id = self.login().json()['res_data']['user_id']
-        self.token = self.login().json()['res_data']['oauth_token']
-        self.signature['sign'] = self.login().json()['res_data']['oauth_token']
+        # self.login()
+        # self.user_id = self.login().json()['res_data']['user_id']
+        # self.token = self.login().json()['res_data']['oauth_token']
+        # self.signature['sign'] = self.login().json()['res_data']['oauth_token']
 
     def login(self):
         """登录"""
@@ -61,6 +61,7 @@ class App(unittest.TestCase):
             print(err)
             raise Exception('登录接口翻车')
 
+    @unittest.skip('暂时跳过')
     def test_recommended_product(self):
         """有推荐标时检查推荐标列表是否为空"""
         url_index = 'https://www-t.jfcaifu.com/app/v500/index.html'
@@ -79,6 +80,27 @@ class App(unittest.TestCase):
             contents = cursor.fetchall()
         if contents:
             self.assertNotEqual([], rec_pro)
+
+    def test_app_register(self):
+        """app注册"""
+
+        # response_code = self.session.request(method='post', params={'mobilePhone': self.register_phone},
+        #                                 url=self.yuming + path_code)
+
+        # self.session.request(method='post', params={'mobilePhone': '17302100056'}, url='https://www-t.jfcaifu.com/wap/user/getActivityCode.html')
+
+        url = 'https://www-t.jfcaifu.com/app/v600/user/doRegister.html'
+        data_register = self.signature.copy()
+        print('原始：', data_register)
+        pwd = 'a1234567'
+        pwd_new =base64.b64encode(pwd.encode(encoding='utf-8'))
+        data_register['phone'] = '17302100017'
+        data_register['pwd'] = pwd_new
+        data_register['code'] = '888888'
+        pprint(data_register)
+
+        res_register = self.session.request(method='post', url=url, params=data_register)
+        pprint(res_register.json())
 
 
 if __name__ == '__main__':

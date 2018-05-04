@@ -47,8 +47,8 @@ class Manage(unittest.TestCase):
     """后台管理系统"""
     def setUp(self):
         self.config = config.copy()
-        self.config['bm'] += time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())        # 配置文件的标名后追加日期如:2018.05.01
-        self.config['timelimit'] = borr_timelimit()                            # 标的天数随机数（确保生成的随机天数唯一）
+        # self.config['bm'] += time.strftime("%Y.%m.%d %H.%M.%S", time.localtime())         # 配置文件的标名后追加日期如:2018.05.01
+        # self.config['timelimit'] = borr_timelimit()                                       # 标的天数随机数（确保生成的随机天数唯一）
         pprint(self.config)
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(10)
