@@ -9,6 +9,9 @@ from pprint import pprint
 import requests
 import smtplib
 import configparser
+import hashlib
+import base64
+import time
 
 
 
@@ -101,3 +104,58 @@ def read_ini(ini_path: str) -> 'config':
     config = configparser.ConfigParser()
     config.read(ini_path, encoding='utf-8')
     return config
+
+
+def app_miyao():
+    """app传参密钥"""
+    appkey = 'V/SQ/yTyYjDmNLXB2unELw=='  # 固定值，得到了appkey
+    a = 'LzgvD74cyEspGADEKOxAhA=='
+    ts = int(time.time())
+    A = a + str(ts)
+    A_md5 = hashlib.md5(A.encode('utf-8'))
+    B = A_md5.hexdigest()  # 按16位输出
+    C = B + appkey
+    C_md5 = hashlib.md5(C.encode('utf-8'))
+    D = C_md5.hexdigest()  # 按16位输出
+    signa = D.upper()  # 转成大写，得到了signa
+    signature = {'appkey': appkey,
+                 'signa': signa,
+                 'ts': ts}
+    return signature
+
+
+def app_login(phone, pwd) -> 'dict':
+    """app登录(返回字典)"""
+    signature = app_miyao()
+    data_login = signature.copy()
+    data_login['id'] = phone
+    data_login['pwd'] = base64.b64encode(pwd.encode(encoding='utf-8'))
+    data_login['code'] = '888888'
+    # print(data_login)
+    url = 'https://www-t.jfcaifu.com/app/user/doLogin.html'
+    session = requests.session()
+    res_login = session.request(method='post', url=url, params=data_login)
+
+    try:
+        if res_login.status_code == 200 and res_login.json()['res_msg'] == '登录成功':
+            login_res_json = res_login.json()
+            data_after_login = signature.copy()
+
+            data_after_login['user_id'] = login_res_json['res_data']['user_id']
+            data_after_login['sign'] = login_res_json['res_data']['oauth_token']
+            return data_after_login
+    except Exception as err:
+        print(err)
+        raise Exception('登录接口翻车')
+
+
+if __name__ == '__main__':
+    A = app_login(phone='15821903152', pwd='a1234567')
+    pprint(A)
+
+
+
+
+
+
+

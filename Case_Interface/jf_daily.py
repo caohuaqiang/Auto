@@ -66,7 +66,7 @@ class App(unittest.TestCase):
         """有推荐标时检查推荐标列表是否为空"""
         url_index = 'https://www-t.jfcaifu.com/app/v500/index.html'
         data_index = self.signature.copy()
-        data_index['user_id'] = self.user_id
+        data_index['user_id'] = self.login().json()['res_data']['user_id']
         res_recommend = self.session.request(method='get', url=url_index, params= data_index,)
         if res_recommend.status_code == 200:
             rec_pro = res_recommend.json()['res_data']['fixBorrowList']
@@ -93,7 +93,7 @@ class App(unittest.TestCase):
         data_register = self.signature.copy()
         print('原始：', data_register)
         pwd = 'a1234567'
-        pwd_new =base64.b64encode(pwd.encode(encoding='utf-8'))
+        pwd_new =base64.b64encode(pwd.encode(encoding='utf-8'))             # app密码要base64加密
         data_register['phone'] = '17302100017'
         data_register['pwd'] = pwd_new
         data_register['code'] = '888888'
