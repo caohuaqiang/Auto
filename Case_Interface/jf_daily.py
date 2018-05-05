@@ -94,13 +94,13 @@ class App(unittest.TestCase):
         print('原始：', data_register)
         pwd = 'a1234567'
         pwd_new =base64.b64encode(pwd.encode(encoding='utf-8'))             # app密码要base64加密
-        data_register['phone'] = '17302100017'
+        data_register['phone'] = '17302100018'
         data_register['pwd'] = pwd_new
         data_register['code'] = '888888'
         pprint(data_register)
 
         res_register = self.session.request(method='post', url=url, params=data_register)
-        pprint(res_register.json())
+        pprint(res_register.text)
 
 
 if __name__ == '__main__':
