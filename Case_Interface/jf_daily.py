@@ -81,6 +81,7 @@ class App(unittest.TestCase):
         if contents:
             self.assertNotEqual([], rec_pro)
 
+    @unittest.skip('跳过敏姐注册')
     def test_app_register(self):
         """app注册"""
 
