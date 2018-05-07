@@ -38,8 +38,9 @@ class Center_Product(unittest.TestCase):
         print()
         # pprint(res_homepage.json())
         borr_type = res_homepage.json()['data']
-        for borr in borr_type['new']:
+        for borr in borr_type['recommed']:
             print(borr['name'])
+            # pprint(borr)
 
     @unittest.skip('跳过')
     def test_app_investplaza(self):

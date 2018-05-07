@@ -10,6 +10,7 @@ from DB import UseDataBase
 import time
 import base64
 from ForUse import read_ini, app_miyao, app_login
+from decimal import *
 
 ini_path = parent_dir + '/user.ini'
 config = read_ini(ini_path)
@@ -49,7 +50,7 @@ class APP(unittest.TestCase):
         res_register = self.session.request(method='post', url=url_register, params=data_register)              # 请求注册接口
         print(res_register.text)
 
-    # @unittest.skip('跳过')
+    @unittest.skip('跳过短信快捷登录')
     def test_app_login_SMS(self):
         """短信快捷登录"""
         phone = user_login['username']
@@ -76,17 +77,35 @@ class APP(unittest.TestCase):
             pprint(res_login_authcode.json())
             self.assertEqual('登录成功', res_login_authcode.json()['res_msg'])
 
-
-
-
-    @unittest.skip('跳过刘仁杰本地')
-    def test_lrj(self):
-        """刘仁杰本地"""
-        url = self.bendi_lrj + '/app/v600/account/basic.html'
-        data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
-        pprint(data_after_login)
+    # @unittest.skip('跳过我的页面')
+    def test_myaccount(self):
+        """我的页面（我的账户）"""
+        url = self.ym + '/app/v600/account/basic.html'
+        phone = user_login['username']
+        pwd = user_login['password']
+        data_after_login = app_login(phone=phone, pwd=pwd)  # 登录后的字典
+        # pprint(data_after_login)
         res = self.session.request(method='post', url=url, params=data_after_login)
-        pprint(res.json())
+        print()
+        res_data_account = res.json()['res_data']
+
+        # pprint(res_data_account)
+        print('------------------------------------------------------------------------')
+
+        wants_key = ['useMoney', 'noUseMoney', 'collection', 'total', 'totalInterest']
+        account_lrj = {}
+        for key in wants_key:
+            account_lrj[key] = res_data_account[key]
+        pprint(account_lrj)
+        print('============================')
+
+        with UseDataBase() as cursor:
+            sql = "SELECT ra.user_id, ra.total, ra.use_money, ra.no_use_money, ra.collection from rd_account ra, rd_user ru where ra.user_id = ru.user_id and ru.mobile_phone = %s;"
+            cursor.execute(sql, args=(phone, ))
+            contents = cursor.fetchall()
+            # pprint(contents[-1])
+            # self.assertEqual(contents[-1]['collection'], Decimal('318849.210000'))
+
 
 
 
