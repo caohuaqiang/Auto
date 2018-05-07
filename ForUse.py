@@ -133,6 +133,7 @@ def app_login(phone, pwd) -> 'dict':
     data_login['code'] = '888888'
     # print(data_login)
     url = 'https://www-t.jfcaifu.com/app/user/doLogin.html'
+    # url = 'http://192.168.101.33:8080/app/user/doLogin.html'      #刘仁杰本地
     session = requests.session()
     res_login = session.request(method='post', url=url, params=data_login)
 
@@ -143,6 +144,7 @@ def app_login(phone, pwd) -> 'dict':
 
             data_after_login['user_id'] = login_res_json['res_data']['user_id']
             data_after_login['sign'] = login_res_json['res_data']['oauth_token']
+            data_after_login['oauth_token'] = login_res_json['res_data']['oauth_token']
             return data_after_login
     except Exception as err:
         print(err)

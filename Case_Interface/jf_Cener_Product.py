@@ -22,29 +22,30 @@ class Center_Product(unittest.TestCase):
     """center_product服务接口（小刚）"""
     def setUp(self):
         self.session = requests.session()
-        self.ym = 'http://139.196.107.14:9000'
+        self.ip = 'http://139.196.107.14:9000'
+        self.ym = 'https://www-t.jfcaifu.com'
         self.signature = app_miyao()
 
-    @unittest.skip('跳过')
+    # @unittest.skip('跳过')
     def test_app_homepage(self):
         """APP首页标列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])         # 登录后的字典
         # print(data_after_login)
 
-        url = self.ym + '/product/indexBorrowList'
+        url = self.ip + '/product/indexBorrowList'
         data_homepage = {'userId': 0, }
         res_homepage = self.session.request(method='post', url=url, params=data_homepage)
         print()
         # pprint(res_homepage.json())
         borr_type = res_homepage.json()['data']
-        for borr in borr_type['recommed']:
+        for borr in borr_type['new']:
             print(borr['name'])
 
-    # @unittest.skip('跳过')
+    @unittest.skip('跳过')
     def test_app_investplaza(self):
         """APP理财广场列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
-        url = self.ym + '/product/productList'
+        url = self.ip + '/product/productList'
         data_investplaza = {'userId': 0, 'orderBy': 'apr', 'timeLimit': 30}
         res_investplaza = self.session.request(method='post', url=url, params=data_investplaza)
         # pprint(res_investplaza.json())
