@@ -44,9 +44,9 @@ class APP(unittest.TestCase):
         data_get_SMS_code = {'phone': user_register['username']}
         data_get_SMS_code = dict(data_get_SMS_code, **self.signature)   # 拼接app秘钥
         # pprint(data_get_SMS_code)
-        # res_get_SMS_code = self.session.request(method='post', url=self.ym + '/app/user/getRegisterCode.html',
-        #                                         params=data_get_SMS_code)                                     # 获取短信验证码接口
-        # print(res_get_SMS_code.json())
+        res_get_SMS_code = self.session.request(method='post', url=self.ym + '/app/user/getRegisterCode.html',
+                                                params=data_get_SMS_code)                                       # 获取短信验证码接口
+        print(res_get_SMS_code.json())
         res_register = self.session.request(method='post', url=url_register, params=data_register)              # 请求注册接口
         print(res_register.text)
 
@@ -99,15 +99,12 @@ class APP(unittest.TestCase):
         pprint(account_lrj)
         print('============================')
 
-        with UseDataBase() as cursor:
-            sql = "SELECT ra.user_id, ra.total, ra.use_money, ra.no_use_money, ra.collection from rd_account ra, rd_user ru where ra.user_id = ru.user_id and ru.mobile_phone = %s;"
-            cursor.execute(sql, args=(phone, ))
-            contents = cursor.fetchall()
+        # with UseDataBase() as cursor:
+        #     sql = "SELECT ra.user_id, ra.total, ra.use_money, ra.no_use_money, ra.collection from rd_account ra, rd_user ru where ra.user_id = ru.user_id and ru.mobile_phone = %s;"
+        #     cursor.execute(sql, args=(phone, ))
+        #     contents = cursor.fetchall()
             # pprint(contents[-1])
             # self.assertEqual(contents[-1]['collection'], Decimal('318849.210000'))
-
-
-
 
     def tearDown(self):
         sql_user_id = 'select user_id from rd_user where mobile_phone = %s'

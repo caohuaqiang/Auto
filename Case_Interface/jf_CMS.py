@@ -13,12 +13,12 @@ class CMS(unittest.TestCase):
     """CMS新项目接口（肖傲）"""
     def setUp(self):
         self.session = requests.session()
-        self.ym = 'http://139.196.107.14:9000'
+        self.ip = 'http://139.196.107.14:9000'
 
     # @unittest.skip('跳过sms图片查询列表')
     def test_picture_query(self):
         """图片查询"""
-        url = self.ym + '/cms/images/queryEnableImages'
+        url = self.ip + '/cms/images/queryEnableImages'
         data = {'source': 'baidu', }
         imageTypes = {'index_loop_banner_mb': '移动首页轮播图',
                       'index_float_icon_mb': '移动首页悬浮ICON图',
@@ -78,7 +78,7 @@ class CMS(unittest.TestCase):
 
     def test_article_query(self):
         """文章查询"""
-        url = self.ym + '/cms/article/query/enableArticles'
+        url = self.ip + '/cms/article/query/enableArticles'
         menuCode = {'site_notice': '网站公告',                  # 图片类型
                     'media_report': '媒体报道',
                     }
