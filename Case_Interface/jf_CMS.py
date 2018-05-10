@@ -36,7 +36,7 @@ class CMS(unittest.TestCase):
             print('传参： ', data)
             res = self.session.request(method='post', url=url, params=data)
             self.assertEqual(200, res.status_code, msg='响应状态码非200！')
-            # pprint(res.json())
+            pprint(res.json())
             dt = res.json()['data']     # 图片数据字典
 
             if dt:      #检查是否是空字典
@@ -61,7 +61,7 @@ class CMS(unittest.TestCase):
             print('传参： ', data_kong)
             res_kong = self.session.request(method='post', url=url, params=data_kong)
             self.assertEqual(200, res_kong.status_code, msg='响应状态码非200！')
-            # pprint(res_kong.json())
+            pprint(res_kong.json())
             dt_kong = res_kong.json()['data']  # 图片数据字典
             if dt_kong:
                 try:
@@ -95,7 +95,7 @@ class CMS(unittest.TestCase):
             articles = res.json()['data'][k]['articleDtoList']
             num = 0
             for article in articles:
-                # pprint(article)
+                pprint(article)
                 # print('-----------------------------------------------------------------------------------------------------------------------------')
                 num += 1                                                                # 统计出 接口返回的列表内有几条数据
             sql = "SELECT COUNT(*) AS NUM from tn_cms_article where menu_code = %s;"

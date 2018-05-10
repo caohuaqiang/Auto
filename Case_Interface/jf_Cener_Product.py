@@ -31,18 +31,19 @@ class Center_Product(unittest.TestCase):
         """APP首页标列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])         # 登录后的字典
         # print(data_after_login)
-
+        user_id = data_after_login['user_id']
         url = self.ip + '/product/indexBorrowList'
-        data_homepage = {'userId': 0, }
+        data_homepage = {'userId': user_id, }
         res_homepage = self.session.request(method='post', url=url, params=data_homepage)
         print()
         # pprint(res_homepage.json())
         borr_type = res_homepage.json()['data']
-        for borr in borr_type['new']:
-            print(borr['name'])
-            # pprint(borr)
+        for borr in borr_type['recommed']:
+            print('首页推荐标如下：')
+            # print(borr['name'])
+            pprint(borr)
 
-    @unittest.skip('跳过')
+    # @unittest.skip('跳过')
     def test_app_investplaza(self):
         """APP理财广场列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
@@ -53,8 +54,9 @@ class Center_Product(unittest.TestCase):
         borrs = res_investplaza.json()['data']
         print()
         for borr in borrs:
-            # pprint(borr)
-            print(borr['name'])
+            print('理财广场标如下：')
+            pprint(borr)
+            # print(borr['name'])
 
 
 if __name__ == '__main__':

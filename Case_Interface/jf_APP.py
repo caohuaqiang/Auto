@@ -50,7 +50,7 @@ class APP(unittest.TestCase):
         res_register = self.session.request(method='post', url=url_register, params=data_register)              # 请求注册接口
         print(res_register.text)
 
-    @unittest.skip('跳过短信快捷登录')
+    # @unittest.skip('跳过短信快捷登录')
     def test_app_login_SMS(self):
         """短信快捷登录"""
         phone = user_login['username']
@@ -99,7 +99,7 @@ class APP(unittest.TestCase):
         pprint(account_lrj)
         print('============================')
 
-    @unittest.skip('跳过查询抽奖')
+    # @unittest.skip('跳过查询抽奖')
     def test_app_queryprizetime(self):
         """app查询抽奖"""
         url = self.ym + '/app/v500/query_times.html'
