@@ -20,6 +20,7 @@ user_register = eval(config.get(section='user', option='register'))  # 注册账
 
 
 class APP(unittest.TestCase):
+    """日常app接口"""
     def setUp(self):
         self.ym = 'https://www-t.jfcaifu.com'
         self.bendi_lrj = 'http://192.168.101.33:8080'   # 刘仁杰本地
