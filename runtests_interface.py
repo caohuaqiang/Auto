@@ -27,6 +27,6 @@ if __name__ == '__main__':
     report_dict = parent_dir + '/Report_Interface/'
     Email = eval(read_ini(parent_dir + '/user.ini').get(section='Email', option='email'))
     rm = Report_Mail(report_dict)
-    rm.send_mail(receiver=[Email['chq'], Email['CTO_JRJ']])
-
+    # rm.send_mail(receiver=[Email['chq'], Email['CTO_JRJ']])
+    rm.send_mail(receiver=[Email['chq'], Email['zhangjun'], Email['zhangdan'], Email['CTO_JRJ']])
 
