@@ -83,7 +83,7 @@ class CMS(unittest.TestCase):
                     'media_report': '媒体报道',
                     }
         data_search_article = {'menuCode': '',
-                               'pageIndex': '3',
+                               'pageIndex': '1',
                                'pageSize': '5',
                                }
 
@@ -113,12 +113,13 @@ class CMS(unittest.TestCase):
             yushu = int(sql_num % pagesize)
             print('余数:', yushu)
 
-            if yushu != 0 and (pageindex - sql_index) == 1:      # 逻辑：以数据库查出14条数据为例，请求参数为每页5条数据，那么第一第二页都能按照要求显示5条，但最后一页就只能显示最后剩下的4条
-                self.assertEqual(yushu, num)
-            elif (pageindex - sql_index) > 1:                   # 超过最后一页的页数时，空列表
-                self.assertEqual(0, num)
-            else:
-                self.assertEqual(pagesize, num)
+            if k == 'media_report':
+                if yushu != 0 and (pageindex - sql_index) == 1:      # 逻辑：以数据库查出14条数据为例，请求参数为每页5条数据，那么第一第二页都能按照要求显示5条，但最后一页就只能显示最后剩下的4条
+                    self.assertEqual(yushu, num)
+                elif (pageindex - sql_index) > 1:                   # 超过最后一页的页数时，空列表
+                    self.assertEqual(0, num)
+                else:
+                    self.assertEqual(pagesize, num)
 
 
 if __name__ == '__main__':

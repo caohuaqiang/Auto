@@ -89,7 +89,7 @@ class APP(unittest.TestCase):
         print()
         res_data_account = res.json()['res_data']
 
-        # pprint(res_data_account)
+        pprint(res_data_account)
         print('------------------------------------------------------------------------')
 
         wants_key = ['useMoney', 'noUseMoney', 'collection', 'total', 'totalInterest']
@@ -99,12 +99,18 @@ class APP(unittest.TestCase):
         pprint(account_lrj)
         print('============================')
 
-        # with UseDataBase() as cursor:
-        #     sql = "SELECT ra.user_id, ra.total, ra.use_money, ra.no_use_money, ra.collection from rd_account ra, rd_user ru where ra.user_id = ru.user_id and ru.mobile_phone = %s;"
-        #     cursor.execute(sql, args=(phone, ))
-        #     contents = cursor.fetchall()
-            # pprint(contents[-1])
-            # self.assertEqual(contents[-1]['collection'], Decimal('318849.210000'))
+    @unittest.skip('跳过查询抽奖')
+    def test_app_queryprizetime(self):
+        """app查询抽奖"""
+        url = self.ym + '/app/v500/query_times.html'
+        phone = user_login['username']
+        pwd = user_login['password']
+        data_after_login = app_login(phone=phone, pwd=pwd)
+        pprint(data_after_login)
+        res = self.session.request(method='post', url=url, params=data_after_login)
+        pprint(res.json())
+
+
 
     def tearDown(self):
         sql_user_id = 'select user_id from rd_user where mobile_phone = %s'
