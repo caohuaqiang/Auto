@@ -53,8 +53,8 @@ class Center_Product(unittest.TestCase):
         # pprint(res_investplaza.json())
         borrs = res_investplaza.json()['data']
         print()
+        print('理财广场标如下：')
         for borr in borrs:
-            print('理财广场标如下：')
             pprint(borr)
             # print(borr['name'])
 
