@@ -48,7 +48,7 @@ class Center_Product(unittest.TestCase):
         """APP理财广场列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
         url = self.ip + '/product/productList'
-        data_investplaza = {'userId': 1687, 'orderBy': 'time_limit', }
+        data_investplaza = {'userId': data_after_login['user_id'], 'orderBy': 'time_limit', }
         res_investplaza = self.session.request(method='post', url=url, params=data_investplaza)
         # pprint(res_investplaza.json())
         borrs = res_investplaza.json()['data']
