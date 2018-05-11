@@ -26,7 +26,7 @@ class Center_Product(unittest.TestCase):
         self.ym = 'https://www-t.jfcaifu.com'
         self.signature = app_miyao()
 
-    @unittest.skip('跳过')
+    # @unittest.skip('跳过')
     def test_app_homepage(self):
         """APP首页标列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])         # 登录后的字典
