@@ -76,7 +76,7 @@ class CMS(unittest.TestCase):
                     raise Exception(err)
             print('===============================================以上是【' + v + '】的内容=========================================================')
 
-    @unittest.skip('跳过文章查询')
+    # @unittest.skip('跳过文章查询')
     def test_article_query(self):
         """文章查询"""
         url = self.ip + '/cms/article/query/enableArticles'
