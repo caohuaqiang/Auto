@@ -43,7 +43,7 @@ class Center_Product(unittest.TestCase):
             print(borr['name'])
             # pprint(borr)
 
-    @unittest.skip('跳过')
+    # @unittest.skip('跳过')
     def test_app_investplaza(self):
         """APP理财广场列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
