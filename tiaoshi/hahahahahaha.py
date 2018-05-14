@@ -14,10 +14,10 @@ class XA(unittest.TestCase):
         self.session = requests.session()
         self.ip = 'http://139.196.107.14:9000'
 
-    @unittest.skip('跳过图片查询接口')
+    # @unittest.skip('跳过图片查询接口')
     def test_CMS_picture(self):
         url = self.ip + '/cms/images/queryEnableImages'
-        image_type = 'index_bank_manage_banner'
+        image_type = 'find_center_banner'
         data = {'source': '', 'imageTypes': image_type, }
         res = self.session.request(method='post', url=url, params=data)
         # print(res.json())
@@ -30,7 +30,7 @@ class XA(unittest.TestCase):
                 n += 1
             print(n)
 
-    # @unittest.skip('跳过文章查询接口')
+    @unittest.skip('跳过文章查询接口')
     def test_CMS_article(self):
         url = self.ip + '/cms/article/query/enableArticles'
         menuCode = 'media_report'

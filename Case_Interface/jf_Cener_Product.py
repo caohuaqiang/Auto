@@ -38,12 +38,12 @@ class Center_Product(unittest.TestCase):
         print()
         # pprint(res_homepage.json())
         borr_type = res_homepage.json()['data']
+        print('首页推荐标如下：')
         for borr in borr_type['recommed']:
-            print('首页推荐标如下：')
-            # print(borr['name'])
-            pprint(borr)
+            print(borr['name'])
+            # pprint(borr)
 
-    # @unittest.skip('跳过')
+    @unittest.skip('跳过')
     def test_app_investplaza(self):
         """APP理财广场列表"""
         data_after_login = app_login(phone=user_login['username'], pwd=user_login['password'])  # 登录后的字典
@@ -55,8 +55,8 @@ class Center_Product(unittest.TestCase):
         print()
         print('理财广场标如下：')
         for borr in borrs:
-            pprint(borr)
-            # print(borr['name'])
+            # pprint(borr)
+            print(borr['name'])
 
 
 if __name__ == '__main__':

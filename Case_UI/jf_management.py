@@ -106,17 +106,17 @@ class Manage(unittest.TestCase):
             # if self.config['is_recommend'] == 1:
             #     driver.find_element_by_css_selector('.layui-unselect.layui-form-checkbox>span').click()
 
-            if self.config['is_recommend'] == '普通':
-                pass
-            else:
-                driver.find_element_by_css_selector('[placeholder="普通"]').click()
-                time.sleep(1)
-
-                for i in range(1, 4):
-                    borr_locate = driver.find_elements_by_css_selector('[lay-value="'+str(i)+'"]')          # 是否推荐/置顶
-                    for borr in borr_locate:
-                        if borr.text[:2] == self.config['is_recommend'][:2]:
-                            borr.click()
+            # if self.config['is_recommend'] == '普通':
+            #     pass
+            # else:
+            #     driver.find_element_by_css_selector('[placeholder="普通"]').click()
+            #     time.sleep(1)
+            #
+            #     for i in range(1, 4):
+            #         borr_locate = driver.find_elements_by_css_selector('[lay-value="'+str(i)+'"]')          # 是否推荐/置顶
+            #         for borr in borr_locate:
+            #             if borr.text[:2] == self.config['is_recommend'][:2]:
+            #                 borr.click()
 
 
 
