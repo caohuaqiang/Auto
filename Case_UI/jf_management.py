@@ -103,8 +103,27 @@ class Manage(unittest.TestCase):
                     a.click()
             print('--------------------------------------------')
 
-            if self.config['is_recommend'] == 1:
-                driver.find_element_by_css_selector('.layui-unselect.layui-form-checkbox>span').click()
+            # if self.config['is_recommend'] == 1:
+            #     driver.find_element_by_css_selector('.layui-unselect.layui-form-checkbox>span').click()
+
+            if self.config['is_recommend'] == '普通':
+                pass
+            else:
+                driver.find_element_by_css_selector('[placeholder="普通"]').click()
+                time.sleep(1)
+
+                for i in range(1, 4):
+                    borr_locate = driver.find_elements_by_css_selector('[lay-value="'+str(i)+'"]')          # 是否推荐/置顶
+                    for borr in borr_locate:
+                        if borr.text[:2] == self.config['is_recommend'][:2]:
+                            borr.click()
+
+
+
+
+
+
+
             driver.find_element_by_id("ads").send_keys(self.config['bm'])  # 标名
             driver.find_element_by_css_selector('[name="borrowNo"]').send_keys(self.config['product_number'])  # 项目编号
 
@@ -190,6 +209,7 @@ class Manage(unittest.TestCase):
             print('出错时的截图： ', filename)
             driver.save_screenshot(filename)
             print(err)
+            raise Exception(err)
         with UseDataBase() as cursor:
             sql = "select `name`, `status`, time_limit from rd_borrow where `status` = 1 and time_limit = %s and `name` = %s;"
             cursor.execute(sql, args=(self.config['timelimit'], self.config['bm'],))
