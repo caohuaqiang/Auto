@@ -118,6 +118,32 @@ class Manage(unittest.TestCase):
             #             if borr.text[:2] == self.config['is_recommend'][:2]:
             #                 borr.click()
 
+            if self.config['is_recommend'] != '置顶':
+                pass
+            else:
+                driver.find_element_by_css_selector('[placeholder="不置顶"]').click()
+                time.sleep(1)
+                top = driver.find_elements_by_css_selector('[lay-value="1"]')
+                for i in top:
+                    if i.text[:2] == '置顶':
+                        i.click()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
