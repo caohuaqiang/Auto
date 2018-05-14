@@ -66,7 +66,7 @@ class CMS(unittest.TestCase):
             if dt_kong:
                 try:
                     with UseDataBase() as cursor:
-                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and image_type = %s and source is NULL ;"
+                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and apply_status = 1 and image_type = %s and source is NULL ;"
                         cursor.execute(sql, args=(k, ))
                         contents = cursor.fetchall()
                         if contents:
