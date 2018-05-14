@@ -42,7 +42,7 @@ class CMS(unittest.TestCase):
             if dt:      #检查是否是空字典
                 try:
                     with UseDataBase() as cursor:
-                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and image_type = %s;"
+                        sql = "SELECT * from tn_cms_images where hide_time > NOW() and show_time < NOW() and apply_status = 1 and image_type = %s;"
                         cursor.execute(sql, args=(k, ))
                         contents = cursor.fetchall()
                         if contents:
@@ -76,6 +76,7 @@ class CMS(unittest.TestCase):
                     raise Exception(err)
             print('===============================================以上是【' + v + '】的内容=========================================================')
 
+    @unittest.skip('跳过文章查询')
     def test_article_query(self):
         """文章查询"""
         url = self.ip + '/cms/article/query/enableArticles'
