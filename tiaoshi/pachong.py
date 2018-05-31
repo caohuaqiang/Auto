@@ -49,7 +49,7 @@ def get_image(html):
 
 
 if __name__ == '__main__':
-    url = 'https://jp.pornhub.com/'
+    url = 'https://tieba.baidu.com/f?kw=鹰眼'
     html = download_page(url)
     get_image(html)
 
